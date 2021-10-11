@@ -8,7 +8,7 @@
         <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
     </head>
     <body>
-        <!-- put React in #root -->
+        <!-- put React in #root: components를 렌더링할 root가 필요 -->
         <div id="root"></div> <!-- 결과: <div id="root"><button>Like</button></div> -->
         <script>
             // create html
@@ -19,10 +19,22 @@
                 // 컴포넌트 실행시 가장 먼저 실행되는 부분
                 constructor(props) {
                     super(props);
+                    // 상태(state): "바뀔수 있는 부분" / like -> liked -> like ...
+                    this.state = { // 상태를 전부 적어주자
+                        liked: false, // 좋아요을 안누른 기본값
+                    };
                 }
                 // LikeButton을 어떻게 화면에 표시할 것인지 결정하는 메서드
                 render() {
-                    return e('button', null, 'Like'); // = <button>Like</button> 컴포넌트를 만들겠다!
+                    return e(
+                        'button',
+                        { onClick: () => { this.setState({ liked: true }) }, type: 'submit' }, // 상태를 바꾸고 싶다면 setState
+                        this.state.liked === true? 'Liked' : 'Like'
+                        ); //  = jQuery: $('button').text('Liked');
+                         
+//                    return e('button', { onClick: () => { console.log('clicked') }, type: 'submit' }, 'Like');
+                    // html 속성(attribute)을 2번째에 쓰고, 속성을 자바스크립트로 표현할땐 c를 대문자로 변경
+                    // = <button onclick="() => { console.log('clicked') }" type="submit">Like</button> 컴포넌트를 만들겠다!
                 }
             }
         </script>
