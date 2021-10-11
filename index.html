@@ -6,13 +6,15 @@
             실제 배포시 development를 production으로 바꾸면 됨 -->
         <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
         <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+        <!-- 최신 및 실험적인 문법들을 JavaScript에서 쓸 수 있게 해주는 Babel -->
+        <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
     </head>
     <body>
         <!-- put React in #root: components를 렌더링할 root가 필요 -->
         <div id="root"></div> <!-- 결과: <div id="root"><button>Like</button></div> -->
-        <script>
+        <script type="text/babel"> // JavaScript안에서 html태그 문법을 쓸 수 있게 됨
             // create html
-            const e = React.createElement
+//            const e = React.createElement
             // create component
             //  = React안에 component가 들어있고, 이것을 상속해옴
             class LikeButton extends React.Component {
@@ -26,12 +28,17 @@
                 }
                 // LikeButton을 어떻게 화면에 표시할 것인지 결정하는 메서드
                 render() {
-                    return e(
-                        'button',
-                        { onClick: () => { this.setState({ liked: true }) }, type: 'submit' }, // 상태를 바꾸고 싶다면 setState
-                        this.state.liked === true? 'Liked' : 'Like'
-                        ); //  = jQuery: $('button').text('Liked');
-                         
+                    // React.createElement를 쓰지않고 html태그 처럼 쓸 수 있음 -> JSX ( JS + XML )
+                    return <button type="submit" onClick={() => { this.setState({ liked: true }) }}>
+                            {this.state.liked === true ? 'Liked' : 'Like'}
+                            </button>; // contents 부분을 {}중괄호로 잡아주면 JS를 쓸 수 있음
+                   
+//                    return e(
+//                       'button',
+//                        { onClick: () => { this.setState({ liked: true }) }, type: 'submit' }, // 상태를 바꾸고 싶다면 setState
+//                        this.state.liked === true? 'Liked' : 'Like'
+//                        ); //  = jQuery: $('button').text('Liked');
+
 //                    return e('button', { onClick: () => { console.log('clicked') }, type: 'submit' }, 'Like');
                     // html 속성(attribute)을 2번째에 쓰고, 속성을 자바스크립트로 표현할땐 c를 대문자로 변경
                     // = <button onclick="() => { console.log('clicked') }" type="submit">Like</button> 컴포넌트를 만들겠다!
@@ -41,7 +48,17 @@
         <script>
             // ~ 컴포넌트를 만들겠다! 한것을 실제 화면에 구현
             // = #root에 LikeButton을 웹에 붙임
-            ReactDOM.render(e(LikeButton), document.querySelector('#root'));
+            // React.createElement를 대체, 태그로 씀
+            // 컴포넌트이므로 쉽게 활용 가능 / reder()에서 바꿔주기만 하면 됨
+            ReactDOM.render(<div>
+                <LikeButton />
+                <LikeButton />
+                <LikeButton />
+                <LikeButton />
+                <LikeButton />
+                <LikeButton />
+                </div>, document.querySelector('#root')); 
+//            ReactDOM.render(e(LikeButton), document.querySelector('#root'));
         </script>
     </body>
 </html>
