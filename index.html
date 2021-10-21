@@ -15,8 +15,8 @@
         <script type="text/babel"> // JavaScript안에서 html태그 문법을 쓸 수 있게 됨
             // create html
 //            const e = React.createElement
-            // create component
-            //  = React안에 component가 들어있고, 이것을 상속해옴
+            // create class component
+            //  = React.Component를 상속받아 클래스 생성 / 컴포넌트의 이름은 PascalCase로 작명
             class LikeButton extends React.Component {
                 // 컴포넌트 실행시 가장 먼저 실행되는 부분
                 constructor(props) {
@@ -26,6 +26,7 @@
                         liked: false, // 좋아요을 안누른 기본값
                     };
                 }
+                // render() 메서드에서 JSX를 return
                 // LikeButton을 어떻게 화면에 표시할 것인지 결정하는 메서드
                 render() {
                     // React.createElement를 쓰지않고 html태그 처럼 쓸 수 있음 -> JSX ( JS + XML )
